@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #9c979723;
+}
+
+.container {
+    display: flex;
+}
+
+.game-board {
+    width: 450px;
+    height: 450px;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    border: 1px solid #000000;
+    margin-right: 20px;
+    position: relative; /* Đảm bảo game-board có vị trí tương đối */
+    transform: translateX(-30%);
+}
+
+.game-board div {
+    border: 0.5px solid #928d8d;
+}
+
+.sidebar {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart {
+    width: 350px;
+    height: 270px;
+}
+
+button {
+    margin-top: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer; 
+    position: relative;  /*Đảm bảo game-board có vị trí tương đối */
+    transform: translateY(-170%); 
+    background-color: #f3efefe7;
+    transition: background-color 0.5s, transform 0.5s;
+}
+button:hover {
+    background-color: #ccc4c4;
+}
+.player-choice {
+    margin-top: 20px;
+    text-align: center;
+    position: relative; /* Đảm bảo game-board có vị trí tương đối */
+    transform: translateY(-20%);
+}
+.player-choice p {
+    margin-bottom: 10px; /* Khoảng cách dưới label */
+    position: relative; /* Đảm bảo game-board có vị trí tương đối */
+    transform: translateY(-400%); 
+}
+.player-choice button {
+    margin: 6px 15px;
+}
+
