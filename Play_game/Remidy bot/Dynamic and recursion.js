@@ -14,25 +14,24 @@ function line(pos, last, direct, iex, iey, x, y, Board_game, Pb) {
     if (Board_game[x][y] === 'X') cost = 1;
     if (Board_game[x][y] === 'X' || Board_game[x][y] === 'O') Pb[x][y].val = 0;
     
-    if (player === Board_game[x - iex][y - iey] && check_sub(x - iex, y - iey)) 
+    if (check_sub(x - iex, y - iey) && player === Board_game[x - iex][y - iey]){
         Pb[x - iex][y - iey].no[pos][0] = Pb[x][y].no[pos][0] + cost;
-    if (player === Board_game[x + iex][y + iey] && check_add(x + iex, y + iey)) 
+    }
+    if (check_add(x + iex, y + iey) && player === Board_game[x + iex][y + iey]) 
         Pb[x + iex][y + iey].no[pos][1] = Pb[x][y].no[pos][1] + cost;
     
-    if (player !== Board_game[x - iex][y - iey] && Board_game[x - iex][y - iey] !== ' ' 
-        && check_sub(x - iex, y - iey)) 
-        Pb[x][y].no[pos][1] = (-cost) * 0.5;
-    if (player !== Board_game[x + iex][y + iey] && Board_game[x + iex][y + iey] !== ' '
-        && check_add(x + iex, y + iey)) 
-        Pb[x][y].no[pos][0] = (-cost) * 0.5;
+    if (check_sub(x - iex, y - iey) && player !== Board_game[x - iex][y - iey] && Board_game[x - iex][y - iey] !== ' ') 
+        Pb[x][y].no[pos][1] = 0;
+    if (check_add(x + iex, y + iey) && player !== Board_game[x + iex][y + iey] && Board_game[x + iex][y + iey] !== ' ') 
+        Pb[x][y].no[pos][0] = 0;
     
     if (direct === 0) kt = true;
-    if (Board_game[x - iex][y - iey] !== ' ' && (direct === -1 || kt) && check_sub(x - iex, y - iey)) 
+    if (check_sub(x - iex, y - iey) && Board_game[x - iex][y - iey] !== ' ' && (direct === -1 || kt)) 
         line(pos, last, -1, iex, iey, x - iex, y - iey, Board_game, Pb);
-    if (Board_game[x + iex][y + iey] !== ' ' && (direct === 1 || kt) && check_add(x + iex, y + iey)) 
+    if (check_add(x + iex, y + iey) && Board_game[x + iex][y + iey] !== ' ' && (direct === 1 || kt)) 
         line(pos, last, 1, iex, iey, x + iex, y + iey, Board_game, Pb);
     
-    if (Board_game[x - iex][y - iey] === ' ' && check_sub(x - iex, y - iey)) {
+    if (check_sub(x - iex, y - iey) && Board_game[x - iex][y - iey] === ' ') {
         Pb[x - iex][y - iey].no[pos][0] = Pb[x][y].no[pos][0] + cost;
         let xt = x - iex, yt = y - iey;
         Pb[xt][yt].val = (Pb[xt][yt].no[0][0] + Pb[xt][yt].no[0][1]) + (Pb[xt][yt].no[1][0] + Pb[xt][yt].no[1][1]) 
@@ -40,7 +39,7 @@ function line(pos, last, direct, iex, iey, x, y, Board_game, Pb) {
         if (last === 0) line(pos, 1, 1, iex, iey, x, y, Board_game, Pb);
     }
     
-    if (Board_game[x + iex][y + iey] === ' ' && check_add(x + iex, y + iey)) {
+    if (check_add(x + iex, y + iey) && Board_game[x + iex][y + iey] === ' ') {
         Pb[x + iex][y + iey].no[pos][1] = Pb[x][y].no[pos][1] + cost;
         let xt = x + iex, yt = y + iey;
         Pb[xt][yt].val = (Pb[xt][yt].no[0][0] + Pb[xt][yt].no[0][1]) + (Pb[xt][yt].no[1][0] + Pb[xt][yt].no[1][1]) 
@@ -63,7 +62,7 @@ function PointInBoard(x, y, Board_game, Pb) {
 function totalBoard(m, n, Pb, Board_game) {
     let sum = 0;
     for (let i = 0; i < m; i++) {
-        for (let j = 0; j <= n; j++) {
+        for (let j = 0; j < n; j++) {
             if (Board_game[i][j] === ' ') {
                 sum += Pb[i][j].val;
             }
